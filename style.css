@@ -12,28 +12,50 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Amatic SC', cursive;
+  overflow-x: hidden;
 }
 
 h1 {
   text-align: center;
-  font-size: 10rem;
+  font-size: clamp(3rem, 8vw, 10rem);
   line-height: 1;
-  margin-bottom: 0;
+  margin: 1rem 0.5rem;
+  word-break: break-word;
 }
 
 .score {
   background: rgba(255,255,255,0.2);
-  padding: 0 3rem;
+  padding: 0 clamp(1rem, 2vw, 3rem);
   line-height: 1;
   border-radius: 1rem;
 }
 
+/* timer - matches score visual style, positioned top-right */
+.timer {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255,255,255,0.2);
+  padding: 0 clamp(1rem, 2vw, 3rem);
+  line-height: 1;
+  border-radius: 1rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  z-index: 10;
+  font-size: 20px;
+}
+
 .game {
-  width: 600px;
-  height: 400px;
+  width: 90vw;
+  max-width: 600px;
+  aspect-ratio: 3 / 2;
   display: flex;
   flex-wrap: wrap;
-  margin: 0 auto;
+  margin: 2rem auto;
+  padding: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .hole {
@@ -48,35 +70,86 @@ h1 {
   background-size: contain;
   content: '';
   width: 100%;
-  height:70px;
+  height: 70px;
   position: absolute;
   z-index: 2;
   bottom: -30px;
 }
 
 .mole {
-  background: url('Screenshot_20250102-154428.png') bottom center no-repeat;
-  background-size: 60%;
+  background: url('punit.jpg') bottom center no-repeat;
+  background-size: 66%;
   position: absolute;
   top: 100%;
   width: 100%;
   height: 100%;
-  transition:all 0.4s;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.mole:active {
+  transform: scale(0.95);
 }
 
 .hole.up .mole {
-  top: 0;
+  /* when mole is up, nudge it slightly higher so more of the image shows */
+  top: -10%;
 }
-button
-{
+
+button {
+  display: block;
   background: rgba(255,255,255,0.2);
-  height: 75px;
-  width: 152px;
+  height: clamp(50px, 12vw, 75px);
+  width: clamp(120px, 25vw, 152px);
+  border: none;
   border-radius: 1rem;
-  align-items: center;
-  justify-content: center;
-  font-size: 42px;
+  font-size: clamp(28px, 6vw, 42px);
   color: black;
   font-weight: bolder;
   font-family: 'Amatic SC', cursive;
+  cursor: pointer;
+  margin: 1rem auto;
+  transition: all 0.2s;
+}
+
+button:active {
+  transform: scale(0.95);
+  background: rgba(255,255,255,0.3);
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  html {
+    font-size: 8px;
+  }
+  
+  h1 {
+    margin: 0.5rem 0.25rem;
+  }
+  
+  .game {
+    margin: 1rem auto;
+  }
+  
+  .hole:after {
+    height: 50px;
+    bottom: -20px;
+  }
+  
+  .mole {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    margin: 0.3rem 0;
+  }
+  
+  .game {
+    padding: 0.5rem;
+    margin: 0.5rem auto;
+  }
 }
